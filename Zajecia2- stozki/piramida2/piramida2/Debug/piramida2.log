@@ -1,0 +1,4 @@
+﻿  piramida2.cpp
+c:\users\forestf\desktop\grafika\zajecia2- stozki\piramida2\piramida2\piramida2.cpp(130): warning C4244: "=": konwersja z "double" do "GLfloat", możliwa utrata danych
+c:\users\forestf\desktop\grafika\zajecia2- stozki\piramida2\piramida2\piramida2.cpp(131): warning C4244: "=": konwersja z "double" do "GLfloat", możliwa utrata danych
+  piramida2.vcxproj -> C:\Users\Forestf\Desktop\Grafika\Zajecia2- stozki\piramida2\Debug\piramida2.exe

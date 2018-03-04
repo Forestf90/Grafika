@@ -1,0 +1,5 @@
+﻿  ConsoleApplication1.cpp
+c:\users\forestf\desktop\grafika\zajecia1 - 15stokat\consoleapplication1\consoleapplication1\consoleapplication1.cpp(39): warning C4244: "inicjowanie": konwersja z "double" do "GLfloat", możliwa utrata danych
+c:\users\forestf\desktop\grafika\zajecia1 - 15stokat\consoleapplication1\consoleapplication1\consoleapplication1.cpp(40): warning C4244: "inicjowanie": konwersja z "double" do "GLfloat", możliwa utrata danych
+c:\users\forestf\desktop\grafika\zajecia1 - 15stokat\consoleapplication1\consoleapplication1\consoleapplication1.cpp(109): warning C4326: zwracany typ "main" powinien być "int" zamiast "void"
+  ConsoleApplication1.vcxproj -> C:\Users\Forestf\Desktop\Grafika\Zajecia1 - 15stokat\ConsoleApplication1\Debug\ConsoleApplication1.exe

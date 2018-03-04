@@ -1,0 +1,4 @@
+﻿  korkociag.cpp
+c:\users\forestf\desktop\grafika\zajecia2- stozki\korkociag\korkociag\korkociag.cpp(30): warning C4244: "=": konwersja z "double" do "GLfloat", możliwa utrata danych
+c:\users\forestf\desktop\grafika\zajecia2- stozki\korkociag\korkociag\korkociag.cpp(31): warning C4244: "=": konwersja z "double" do "GLfloat", możliwa utrata danych
+  korkociag.vcxproj -> C:\Users\Forestf\Desktop\Grafika\Zajecia2- stozki\korkociag\Debug\korkociag.exe
