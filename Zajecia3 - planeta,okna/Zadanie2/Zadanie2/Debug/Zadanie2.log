@@ -1,13 +1,14 @@
-﻿  Zadanie2.cpp
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(467): warning C4305: "+=": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(472): warning C4305: "-=": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(524): warning C4305: "argument": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(526): warning C4305: "argument": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(528): warning C4305: "argument": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(530): warning C4305: "argument": obcięcie z "double" do "GLfloat"
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(637): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0142" nie może być przedstawiony w bieżącej stronie kodowej (1252)
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(637): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0119" nie może być przedstawiony w bieżącej stronie kodowej (1252)
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(699): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0142" nie może być przedstawiony w bieżącej stronie kodowej (1252)
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(712): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0105" nie może być przedstawiony w bieżącej stronie kodowej (1252)
-c:\users\forestf\desktop\grafika\zaecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(714): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u015B" nie może być przedstawiony w bieżącej stronie kodowej (1252)
-  Zadanie2.vcxproj -> C:\Users\Forestf\Desktop\Grafika\Zaecia3 - planeta,okna\Zadanie2\Debug\Zadanie2.exe
+﻿  stdafx.cpp
+  Zadanie2.cpp
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(467): warning C4305: "+=": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(472): warning C4305: "-=": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(524): warning C4305: "argument": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(526): warning C4305: "argument": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(528): warning C4305: "argument": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(530): warning C4305: "argument": obcięcie z "double" do "GLfloat"
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(637): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0142" nie może być przedstawiony w bieżącej stronie kodowej (1252)
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(637): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0119" nie może być przedstawiony w bieżącej stronie kodowej (1252)
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(699): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0142" nie może być przedstawiony w bieżącej stronie kodowej (1252)
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(712): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u0105" nie może być przedstawiony w bieżącej stronie kodowej (1252)
+c:\users\forestf\desktop\grafika\zajecia3 - planeta,okna\zadanie2\zadanie2\zadanie2.cpp(714): warning C4566: znak przedstawiony przez nazwę zawierającą znaki uniwersalne "\u015B" nie może być przedstawiony w bieżącej stronie kodowej (1252)
+  Zadanie2.vcxproj -> C:\Users\Forestf\Desktop\Grafika\Zajecia3 - planeta,okna\Zadanie2\Debug\Zadanie2.exe
