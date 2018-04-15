@@ -16,15 +16,19 @@ JanuszG@enter.net.pl
 #include <stdio.h>
 #include <math.h>
 #include "materials.h"
+#include "colors.h"
 
 // wskaźnik dostępności rozszerzenia EXT_rescale_normal
 
-bool rescale_normal = false;
+bool rescale_normal = true;
 
 // stałe do obsługi menu podręcznego
 
 enum
 {
+	OTACZAJACE,
+	KIERUNKOWE,
+	REFLEKTOR,
 	BRASS,                // mosiądz
 	BRONZE,               // brąz
 	POLISHED_BRONZE,      // polerowany brąz
@@ -78,9 +82,36 @@ const GLdouble far = 7.0;
 GLfloat rotatex = 0.0;
 GLfloat rotatey = 0.0;
 
+GLfloat light_color[4] = { 0.2, 0.2, 0.2, 1.0 };
+GLfloat light_position[4] =
+{
+	0.0,0.0,2.0,1.0
+};
+
+GLfloat ambient_light[4] =
+{
+	0.2,0.2,0.2,1.0
+};
+
 // wskaźnik naciśnięcia lewego przycisku myszki
 
 int button_state = GLUT_UP;
+int light = 1;
+
+#define GL_PI 3.1415f
+
+// kąty obrotu położenia źródła światła
+
+GLfloat light_rotatex = 0.0;
+GLfloat light_rotatey = 0.0;
+
+GLfloat spot_direction[3] = { 0.0,0.0,-1.0 };
+
+GLfloat spot_cutoff = 180.0;
+GLfloat spot_exponent = 128.0;
+GLfloat constant_attenuation = 1.0;
+GLfloat linear_attenuation = 0.0;
+GLfloat quadratic_attenuation = 0.0;
 
 // poło¿enie kursora myszki
 
@@ -90,6 +121,7 @@ int button_x, button_y;
 
 GLfloat scale = 1.0;
 
+bool Botoczenie = false;
 // właściwości materiału - domyślnie mosiądz
 
 const GLfloat *ambient = BrassAmbient;
@@ -103,47 +135,77 @@ int normals = NORMALS_FLAT;
 
 // współrzędne wierzchołków dwudziestościanu
 
-GLfloat vertex[12 * 3] =
+GLfloat vertex[17 * 3] =
 {
-	0.000,  0.667,  0.500,   // v0
-	0.000,  0.667, -0.500,   // v1
-	0.000, -0.667, -0.500,   // v2
-	0.000, -0.667,  0.500,   // v3
-	0.667,  0.500,  0.000,   // v4
-	0.667, -0.500,  0.000,   // v5
-	-0.667, -0.500,  0.000,  // v6
-	-0.667,  0.500,  0.000,  // v7
-	0.500,  0.000,  0.667,   // v8
-	-0.500,  0.000,  0.667,  // v9
-	-0.500,  0.000, -0.667,  // v10
-	0.500,  0.000, -0.667    // v11
+	1.000, 0.000 , 0.000,
+	0.000, 0.000 , 0.000
+
 };
 
 // opis ścian dwudziestościanu
 
-int triangles[20 * 3] =
-{
-	1, 0, 0,
-	1, 1, 0,
-	1, 10,  0,
-	1,  4, 0,
-	1,  1,  0,
-	1,  4,  0,
-	1,  9,  0,
-	1,  8,  0,
-	1,  7,  0,
-	1,  8,  0,
-	1,  9,  0,
-	1,  5,  0,
-	1,  3,  0,
-	1,  5,  0,
-	1,  6, 0,
-	1, 11,  0,
-	1,  7, 0,
-	1,  9,  0,
-	1,  5, 0,
-	1,  8,  0
+int triangles[30 * 3] =
+{0, 2 , 3 ,
+0,3 , 4 ,
+0,4 , 5 ,
+0,5 , 6 ,
+0,6 , 7 ,
+0,7 , 8 ,
+0,8 , 9 ,
+0,9 , 10 ,
+0,10 , 11 ,
+0,11 , 12 ,
+0,12 , 13 ,
+0,13 , 14 ,
+0,14 , 15 ,
+0,15 , 16 ,
+0,16 , 2 ,
+1,2 , 3 ,
+1,3 , 4 ,
+1,4 , 5 ,
+1,5 , 6 ,
+1,6 , 7 ,
+1,7 , 8 ,
+1,8 , 9 ,
+1,9 , 10 ,
+1,10 , 11 ,
+1,11 , 12 ,
+1,12 , 13 ,
+1,13 , 14 ,
+1,14 , 15 ,
+1,15 , 16 ,
+1,16 , 2 ,
+
 };
+
+
+
+
+void wypelnij()
+{
+	int n = 15;
+	int j = 1;
+	for (GLint i = 6; i <= 51; i+=3)
+	{
+
+		/*vertex[i][0] = vertex[i - 1][0] + ((0.5*cos(i * 2 * 3.14f / n)) * 0.7f);
+		vertex[i][2] = vertex[i - 1][2] + ((0.5*sin(i * 2 * 3.14f / n)) * 0.7f)*/;
+		vertex[i+2] = (0.5*cos(j * 2 * 3.14f / n)*0.7f);
+		vertex[i + 1] = (0.5*sin(j * 2 * 3.14f / n)*0.7f);
+		vertex[i ] = 1.00;
+		j++;
+	}
+
+
+	//centrum
+	//GLfloat cx = 0, cy = 0;
+
+	//for (GLint i = 1; i <= n; i++)
+	//{
+	//	cx = cx + vCorners[i][0];
+	//	cy = cy + vCorners[i][2];
+	//}
+}
 
 
 
@@ -153,6 +215,8 @@ void Normal(GLfloat *n, int i)
 {
 	GLfloat v1[3], v2[3];
 
+	triangles[0] = 2;
+	triangles[1] = 3;
 	// obliczenie wektorów na podstawie współrzędnych wierzchołków trójkątów
 	v1[0] = vertex[3 * triangles[3 * i + 1] + 0] - vertex[3 * triangles[3 * i + 0] + 0];
 	v1[1] = vertex[3 * triangles[3 * i + 1] + 1] - vertex[3 * triangles[3 * i + 0] + 1];
@@ -209,14 +273,59 @@ void Display()
 	// skalowanie obiektu - klawisze "+" i "-"
 	glScalef(scale, scale, scale);
 
-	// włączenie testu bufora głębokości
-	glEnable(GL_DEPTH_TEST);
 
+	
 	// włączenie oświetlenia
 	glEnable(GL_LIGHTING);
 
+	// włączenie testu bufora głębokości
+	glEnable(GL_DEPTH_TEST);
+
+	switch (light)
+	{
+	case 0:
+		glDisable(GL_LIGHT0);
+		glLightModelfv(GL_LIGHT_MODEL_AMBIENT, light_color);
+		glEnable(GL_COLOR_MATERIAL);
+		glColorMaterial(GL_FRONT, GL_AMBIENT);
+		break;
+
+	case 1:
+		glEnable(GL_LIGHT0);
+		glDisable(GL_COLOR_MATERIAL);
+		glLightf(GL_LIGHT0, GL_SPOT_CUTOFF, spot_cutoff);
+		glLightf(GL_LIGHT0, GL_SPOT_EXPONENT, spot_exponent);
+		glLightf(GL_LIGHT0, GL_CONSTANT_ATTENUATION, constant_attenuation);
+		glLightf(GL_LIGHT0, GL_LINEAR_ATTENUATION, linear_attenuation);
+		glLightf(GL_LIGHT0, GL_QUADRATIC_ATTENUATION, quadratic_attenuation);
+		glPushMatrix();
+		glLoadIdentity();
+		glTranslatef(0, 0, -(near + far) / 2);
+		glRotatef(light_rotatex, 1.0, 0, 0);
+		glRotatef(light_rotatey, 0, 1.0, 0);
+		glTranslatef(light_position[0], light_position[1], light_position[2]);
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		glLightfv(GL_LIGHT0, GL_SPOT_DIRECTION, spot_direction);
+		glPushAttrib(GL_LIGHTING_BIT);
+		glDisable(GL_LIGHT0);
+		glMaterialfv(GL_FRONT, GL_EMISSION, Red);
+		glutSolidSphere(0.1, 30, 20);
+		glPopAttrib();
+		glPopMatrix();
+		break;
+
+	case 2:
+		glEnable(GL_LIGHT0);
+		glPushMatrix();
+		glLoadIdentity();
+		glRotatef(light_rotatex, 1.0, 0, 0);
+		glRotatef(light_rotatey, 0, 1.0, 0);
+		glLightfv(GL_LIGHT0, GL_POSITION, light_position);
+		glPopMatrix();
+		break;
+	}
 	// włączenie światła GL_LIGHT0 z parametrami domyślnymi
-	glEnable(GL_LIGHT0);
+	//if(!Botoczenie)glEnable(GL_LIGHT0);
 
 	// właściwości materiału
 	glMaterialfv(GL_FRONT, GL_AMBIENT, ambient);
@@ -236,15 +345,18 @@ void Display()
 
 	// generowanie obiektu gładkiego - jeden uśredniony
 	// wektor normalny na wierzchołek
+
+
+
 	if (normals == NORMALS_SMOOTH)
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 34; i++)
 		{
 			// obliczanie wektora normalnego dla pierwszego wierzchołka
 			GLfloat n[3];
 			n[0] = n[1] = n[2] = 0.0;
 
 			// wyszukanie wszystkich ścian posiadających bie¿ący wierzchołek
-			for (int j = 0; j < 20; j++)
+			for (int j = 0; j < 34; j++)
 				if (3 * triangles[3 * i + 0] == 3 * triangles[3 * j + 0] ||
 					3 * triangles[3 * i + 0] == 3 * triangles[3 * j + 1] ||
 					3 * triangles[3 * i + 0] == 3 * triangles[3 * j + 2])
@@ -268,7 +380,7 @@ void Display()
 			n[0] = n[1] = n[2] = 0.0;
 
 			// wyszukanie wszystkich ścian posiadających bie¿ący wierzchołek
-			for (int j = 0; j < 20; j++)
+			for (int j = 0; j < 34; j++)
 				if (3 * triangles[3 * i + 1] == 3 * triangles[3 * j + 0] ||
 					3 * triangles[3 * i + 1] == 3 * triangles[3 * j + 1] ||
 					3 * triangles[3 * i + 1] == 3 * triangles[3 * j + 2])
@@ -292,7 +404,7 @@ void Display()
 			n[0] = n[1] = n[2] = 0.0;
 
 			// wyszukanie wszystkich ścian posiadających bie¿ący wierzchołek
-			for (int j = 0; j < 20; j++)
+			for (int j = 0; j < 34; j++)
 				if (3 * triangles[3 * i + 2] == 3 * triangles[3 * j + 0] ||
 					3 * triangles[3 * i + 2] == 3 * triangles[3 * j + 1] ||
 					3 * triangles[3 * i + 2] == 3 * triangles[3 * j + 2])
@@ -315,7 +427,7 @@ void Display()
 	else
 
 		// generowanie obiektu "płaskiego" - jeden wektor normalny na ścianę
-		for (int i = 0; i < 20; i++)
+		for (int i = 0; i < 34; i++)
 		{
 			GLfloat n[3];
 			Normal(n, i);
@@ -333,12 +445,24 @@ void Display()
 	// koniec definicji obiektu
 	glEnd();
 
+	// wyłączenie oświetlenia
+	glDisable(GL_LIGHTING);
+
+	// wyłączenie obsługi właściwości materiałów
+	glDisable(GL_COLOR_MATERIAL);
+
+
+
 	// skierowanie poleceñ do wykonania
 	glFlush();
-
 	// zamiana buforów koloru
 	glutSwapBuffers();
+
+	
+
 }
+
+
 
 // zmiana wielkości okna
 
@@ -376,16 +500,90 @@ void Reshape(int width, int height)
 
 void Keyboard(unsigned char key, int x, int y)
 {
-	// klawisz +
-	if (key == '+')
-		scale += 0.05;
+	// zmiana wartości składowej R
+	if (key == 'R' && ambient_light[0] < 1.0)
+		ambient_light[0] += 0.05;
 	else
+		if (key == 'r' && ambient_light[0] > -1.0)
+			ambient_light[0] -= 0.05;
 
-		// klawisz -
-		if (key == '-' && scale > 0.05)
+	// zmiana wartości składowej G
+	if (key == 'G' && ambient_light[1] < 1.0)
+		ambient_light[1] += 0.05;
+	else
+		if (key == 'g' && ambient_light[1] > -1.0)
+			ambient_light[1] -= 0.05;
+
+	// zmiana wartości składowej B
+	if (key == 'B' && ambient_light[2] < 1.0)
+		ambient_light[2] += 0.05;
+	else
+		if (key == 'b' && ambient_light[2] > -1.0)
+			ambient_light[2] -= 0.05;
+
+	switch (key)
+	{
+	case '+':
+		scale += 0.05;
+		break;
+
+	case '-':
+		if (scale > 0.05)
 			scale -= 0.05;
+		break;
 
-	// narysowanie sceny
+	case 'S':
+		if (spot_cutoff == 90)
+			spot_cutoff = 180;
+		else if (spot_cutoff < 90)
+			spot_cutoff++;
+		break;
+
+	case 's':
+		if (spot_cutoff == 180)
+			spot_cutoff = 90;
+		else if (spot_cutoff > 0)
+			spot_cutoff--;
+		break;
+
+	case 'E':
+		if (spot_exponent < 128)
+			spot_exponent++;
+		break;
+
+	case 'e':
+		if (spot_exponent > 0)
+			spot_exponent--;
+		break;
+
+	case 'C':
+		constant_attenuation += 0.1;
+		break;
+
+	case 'c':
+		if (constant_attenuation > 0)
+			constant_attenuation -= 0.1;
+		break;
+
+	case 'L':
+		linear_attenuation += 0.1;
+		break;
+
+	case 'l':
+		if (linear_attenuation > 0)
+			linear_attenuation -= 0.1;
+		break;
+
+	case 'Q':
+		quadratic_attenuation += 0.1;
+		break;
+
+	case 'q':
+		if (quadratic_attenuation > 0)
+			quadratic_attenuation -= 0.1;
+		break;
+	}
+	
 	Display();
 }
 
@@ -458,6 +656,21 @@ void Menu(int value)
 {
 	switch (value)
 	{
+	case OTACZAJACE:
+		light=0;
+		Display();
+		break;
+
+	case KIERUNKOWE:
+		light=2;
+		Display();
+		break;
+
+	case REFLEKTOR:
+		light=1;
+		Display();
+		break;
+
 		// materiał - mosiądz
 	case BRASS:
 		ambient = BrassAmbient;
@@ -484,6 +697,7 @@ void Menu(int value)
 		shininess = PolishedBronzeShininess;
 		Display();
 		break;
+
 
 		// materiał - chrom
 	case CHROME:
@@ -694,6 +908,7 @@ int main(int argc, char *argv[])
 	// inicjalizacja biblioteki GLUT
 	glutInit(&argc, argv);
 
+	wypelnij();
 	// inicjalizacja bufora ramki
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGB | GLUT_DEPTH);
 
@@ -728,6 +943,7 @@ int main(int argc, char *argv[])
 	int MenuMaterial = glutCreateMenu(Menu);
 #ifdef WIN32
 
+	
 	glutAddMenuEntry("Mosiądz", BRASS);
 	glutAddMenuEntry("Brąz", BRONZE);
 	glutAddMenuEntry("Polerowany brąz", POLISHED_BRONZE);
@@ -770,6 +986,11 @@ int main(int argc, char *argv[])
 	glutAddMenuEntry("Czarna guma", BLACK_RUBBER);
 #endif
 
+	int Menusw = glutCreateMenu(Menu);
+	glutAddMenuEntry("Kierunkowe", KIERUNKOWE);
+	glutAddMenuEntry("Otaczajace", OTACZAJACE);
+	glutAddMenuEntry("Reflektor", REFLEKTOR);
+
 	// utworzenie podmenu - Wektory normalne
 	int MenuNormals = glutCreateMenu(Menu);
 #ifndef WIN32
@@ -806,6 +1027,7 @@ int main(int argc, char *argv[])
 #endif
 
 	glutAddSubMenu("Wektory normalne", MenuNormals);
+	glutAddSubMenu("Światło", Menusw);
 	glutAddSubMenu("Aspekt obrazu", MenuAspect);
 #ifndef WIN32
 
