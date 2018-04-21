@@ -1,0 +1,3 @@
+﻿  ConsoleApplication1.cpp
+g:\zajecie8\consoleapplication1\consoleapplication1\consoleapplication1.cpp(30): warning C4244: "inicjowanie": konwersja z "double" do "GLfloat", możliwa utrata danych
+  ConsoleApplication1.vcxproj -> G:\zajecie8\ConsoleApplication1\Debug\ConsoleApplication1.exe
