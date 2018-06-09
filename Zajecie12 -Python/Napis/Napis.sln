@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2036
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Napis", "Napis.pyproj", "{D732DE22-4B95-4D3D-A472-3AB1EACB72B7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D732DE22-4B95-4D3D-A472-3AB1EACB72B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D732DE22-4B95-4D3D-A472-3AB1EACB72B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {99F27D8C-F6E5-4E3B-9E4A-16153F0A8E47}
+	EndGlobalSection
+EndGlobal
